@@ -1,0 +1,108 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+        </marker>
+    </defs>
+
+    <!-- 배경 -->
+    <rect width="800" height="500" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="10"/>
+
+    <!-- 제목 -->
+    <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1e293b">
+        CloudFront Miss → Hit 변화 과정
+    </text>
+
+    <!-- Miss 상황 (위쪽) -->
+    <g id="miss-scenario">
+        <text x="50" y="70" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc2626">
+            1️⃣ Miss from cloudfront (첫 요청)
+        </text>
+
+        <!-- 사용자 -->
+        <circle cx="100" cy="120" r="20" fill="#3b82f6"/>
+        <text x="100" y="127" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">👤</text>
+        <text x="100" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">사용자</text>
+
+        <!-- CloudFront 엣지 -->
+        <rect x="250" y="100" width="80" height="40" rx="5" fill="#f59e0b"/>
+        <text x="290" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">엣지</text>
+        <text x="290" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">캐시 없음</text>
+
+        <!-- S3 오리진 -->
+        <rect x="450" y="100" width="80" height="40" rx="5" fill="#10b981"/>
+        <text x="490" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">S3</text>
+        <text x="490" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">오리진</text>
+
+        <!-- 화살표 -->
+        <line x1="120" y1="120" x2="250" y2="120" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="185" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748b">요청</text>
+
+        <line x1="330" y1="120" x2="450" y2="120" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="390" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748b">오리진 요청</text>
+
+        <line x1="450" y1="130" x2="330" y2="130" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="390" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#10b981">파일 + 저장</text>
+
+        <line x1="250" y1="130" x2="120" y2="130" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="185" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#10b981">응답</text>
+
+        <!-- 시간 표시 -->
+        <rect x="580" y="100" width="120" height="60" rx="5" fill="#fee2e2" stroke="#dc2626"/>
+        <text x="640" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#dc2626">Miss 응답</text>
+        <text x="640" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">200-400ms</text>
+        <text x="640" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">Age: 없음</text>
+    </g>
+
+    <!-- 구분선 -->
+    <line x1="50" y1="200" x2="750" y2="200" stroke="#d1d5db" stroke-width="2" stroke-dasharray="5,5"/>
+
+    <!-- Hit 상황 (아래쪽) -->
+    <g id="hit-scenario">
+        <text x="50" y="240" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10b981">
+            2️⃣ Hit from cloudfront (재요청)
+        </text>
+
+        <!-- 사용자 -->
+        <circle cx="100" cy="290" r="20" fill="#3b82f6"/>
+        <text x="100" y="297" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">👤</text>
+        <text x="100" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">사용자</text>
+
+        <!-- CloudFront 엣지 (캐시 있음) -->
+        <rect x="250" y="270" width="80" height="40" rx="5" fill="#10b981"/>
+        <text x="290" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">엣지</text>
+        <text x="290" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">캐시 있음 ✅</text>
+
+        <!-- S3 (사용 안함) -->
+        <rect x="450" y="270" width="80" height="40" rx="5" fill="#9ca3af" opacity="0.5"/>
+        <text x="490" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">S3</text>
+        <text x="490" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">사용 안함</text>
+
+        <!-- 화살표 (단순화됨) -->
+        <line x1="120" y1="290" x2="250" y2="290" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="185" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748b">요청</text>
+
+        <line x1="250" y1="300" x2="120" y2="300" stroke="#10b981" stroke-width="3" marker-end="url(#arrow)"/>
+        <text x="185" y="315" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#10b981">즉시 응답</text>
+
+        <!-- 시간 표시 -->
+        <rect x="580" y="270" width="120" height="60" rx="5" fill="#d1fae5" stroke="#10b981"/>
+        <text x="640" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#10b981">Hit 응답</text>
+        <text x="640" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">20-80ms</text>
+        <text x="640" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">Age: 120초</text>
+    </g>
+
+    <!-- 핵심 변화 -->
+    <g id="key-changes">
+        <rect x="200" y="380" width="400" height="80" rx="10" fill="#fef3c7" stroke="#f59e0b"/>
+        <text x="400" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#92400e">
+            핵심 변화점
+        </text>
+        <text x="400" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#374151">
+            Miss: 엣지 → S3 → 엣지 → 사용자 (긴 경로)
+        </text>
+        <text x="400" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#374151">
+            Hit: 엣지 → 사용자 (짧은 경로)
+        </text>
+    </g>
+</svg>
