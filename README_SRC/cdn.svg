@@ -1,0 +1,154 @@
+<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- 그라디언트 정의 -->
+        <linearGradient id="repoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="s3Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="cdnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="userGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+        </linearGradient>
+
+        <!-- 화살표 마커 -->
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+        </marker>
+    </defs>
+
+    <!-- 배경 -->
+    <rect width="1200" height="600" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="10"/>
+
+    <!-- 제목 -->
+    <text x="600" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">
+        정적 파일 배포 아키텍처: 저장소 → 스토리지 → CDN
+    </text>
+
+    <!-- 1. 저장소 (Repository) -->
+    <g id="repository">
+        <rect x="50" y="80" width="200" height="160" rx="10" fill="url(#repoGradient)" opacity="0.1" stroke="#3b82f6" stroke-width="2"/>
+        <text x="150" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e40af">1. 저장소 (Repository)</text>
+
+        <!-- GitHub 아이콘 -->
+        <rect x="130" y="130" width="40" height="30" rx="5" fill="#24292e"/>
+        <text x="150" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">GH</text>
+
+        <text x="150" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• Next.js 소스코드</text>
+        <text x="150" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• package.json</text>
+        <text x="150" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• GitHub Actions</text>
+    </g>
+
+    <!-- 2. 스토리지 (S3) -->
+    <g id="storage">
+        <rect x="350" y="80" width="200" height="160" rx="10" fill="url(#s3Gradient)" opacity="0.1" stroke="#f97316" stroke-width="2"/>
+        <text x="450" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ea580c">2. 스토리지 (S3)</text>
+
+        <!-- S3 아이콘 -->
+        <rect x="430" y="130" width="40" height="30" rx="5" fill="#f97316"/>
+        <text x="450" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">S3</text>
+
+        <text x="450" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• HTML, CSS, JS 파일</text>
+        <text x="450" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 정적 웹사이트 호스팅</text>
+        <text x="450" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 오리진 서버 역할</text>
+    </g>
+
+    <!-- 3. CDN (CloudFront) -->
+    <g id="cdn">
+        <rect x="650" y="80" width="200" height="160" rx="10" fill="url(#cdnGradient)" opacity="0.1" stroke="#10b981" stroke-width="2"/>
+        <text x="750" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#059669">3. CDN (CloudFront)</text>
+
+        <!-- CloudFront 아이콘 -->
+        <rect x="730" y="130" width="40" height="30" rx="5" fill="#10b981"/>
+        <text x="750" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">CF</text>
+
+        <text x="750" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 글로벌 엣지 캐시</text>
+        <text x="750" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 압축 및 최적화</text>
+        <text x="750" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 사용자 가까운 위치</text>
+    </g>
+
+    <!-- 4. 사용자 -->
+    <g id="users">
+        <rect x="950" y="80" width="200" height="160" rx="10" fill="url(#userGradient)" opacity="0.1" stroke="#8b5cf6" stroke-width="2"/>
+        <text x="1050" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#7c3aed">4. 최종 사용자</text>
+
+        <!-- 사용자 아이콘 -->
+        <circle cx="1050" cy="145" r="15" fill="#8b5cf6"/>
+        <text x="1050" y="151" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white">👤</text>
+
+        <text x="1050" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 빠른 로딩 (27ms)</text>
+        <text x="1050" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 압축된 파일 수신</text>
+        <text x="1050" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">• 일관된 성능</text>
+    </g>
+
+    <!-- 배포 플로우 화살표 -->
+    <line x1="250" y1="160" x2="350" y2="160" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <text x="300" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">GitHub Actions</text>
+    <text x="300" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">빌드 배포</text>
+
+    <line x1="550" y1="160" x2="650" y2="160" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <text x="600" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">오리진</text>
+    <text x="600" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">연결</text>
+
+    <line x1="850" y1="160" x2="950" y2="160" stroke="#64748b" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <text x="900" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">엣지에서</text>
+    <text x="900" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#475569">즉시 응답</text>
+
+    <!-- 성능 비교 섹션 -->
+    <g id="performance-comparison">
+        <rect x="50" y="300" width="1100" height="250" rx="10" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+        <text x="600" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#374151">
+            Cold Start 성능 비교 결과
+        </text>
+
+        <!-- S3 직접 접근 -->
+        <rect x="80" y="350" width="200" height="120" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="180" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#92400e">S3 Direct</text>
+        <text x="180" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#374151">평균: 187ms</text>
+        <text x="180" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">최소: 184ms</text>
+        <text x="180" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">최대: 190ms</text>
+        <text x="180" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#dc2626">캐시 없음</text>
+
+        <!-- 화살표 -->
+        <text x="350" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#10b981">→</text>
+
+        <!-- CloudFront -->
+        <rect x="420" y="350" width="200" height="120" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="520" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#065f46">CloudFront CDN</text>
+        <text x="520" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#374151">평균: 27.67ms</text>
+        <text x="520" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">최소: 26ms</text>
+        <text x="520" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">최대: 29ms</text>
+        <text x="520" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#10b981">100% Cache Hit</text>
+
+        <!-- 개선 효과 -->
+        <rect x="680" y="360" width="200" height="100" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+        <text x="780" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#15803d">개선 효과</text>
+        <text x="780" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#374151">85.2% 빠름</text>
+        <text x="780" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">159.33ms 단축</text>
+        <text x="780" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#16a34a">6.8배 성능 향상</text>
+
+        <!-- 네트워크 경로 -->
+        <rect x="920" y="360" width="200" height="100" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+        <text x="1020" y="385" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151">네트워크 경로</text>
+        <text x="1020" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">S3: 한국 → 호주 시드니</text>
+        <text x="1020" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">CF: 한국 → 아시아 엣지</text>
+        <text x="1020" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#10b981">물리적 거리 85% 단축</text>
+    </g>
+
+    <!-- 캐싱 전략 -->
+    <g id="caching-strategy">
+        <rect x="80" y="490" width="1040" height="80" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1"/>
+        <text x="600" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#6b21a8">캐싱 전략</text>
+        <text x="300" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">정적 자산: max-age=31536000, immutable</text>
+        <text x="600" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">HTML: max-age=0, must-revalidate</text>
+        <text x="900" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">Gzip/Brotli 압축 자동 적용</text>
+        <text x="600" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#6b7280">브라우저 캐시 + CDN 캐시 + 압축으로 삼중 최적화</text>
+    </g>
+</svg>

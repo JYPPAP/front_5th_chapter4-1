@@ -137,7 +137,132 @@ Next.js 프로젝트 빌드하여 배포 가능한 파일을 생성
 
 ---
 
+## CDN 도입 후 성능 개선 보고서
+
+#### 테스트 방식 (PowerShell Script 실행)
+```bash
+# encode 를 euc-kr 로 변경 후 실행해야 합니다.
+# https://github.com/JYPPAP/4-1-PowerShellScript/blob/main/Cache-Flush-Performance-Test.ps1
+
+===========================================
+     완전한 캐시 초기화 성능 테스트                                                                                     
+===========================================                                                                             
+     [DEBUG] URL 검증:
+     S3 URL: 'http://jys-new-bucket.s3-website-ap-southeast-2.amazonaws.com/'                                                
+     CloudFront URL: 'https://d18gdmgx2pxnac.cloudfront.net/'                
+     S3 URL 유효: True                                                                                                                         
+     CloudFront URL 유효: True                                                                                                                 
+[CONNECT] 기본 연결 테스트:                                                                                                               S3 연결 테스트...                                                                                                                         S3 연결 성공 (상태: 200)                                                                                                                  CloudFront 연결 테스트...                                                                                                                 CloudFront 연결 성공 (상태: 200)
+
+[INIT] 초기 캐시 초기화...
+[FLUSH] 모든 캐시 초기화 중...
+   DNS 캐시 초기화...
+   네트워크 캐시 초기화...
+   캐시 초기화 완료!
+
+[S3] 진정한 Cold Start 테스트
+----------------------------------------                                                                                                  기본 URL: http://jys-new-bucket.s3-website-ap-southeast-2.amazonaws.com/                                                                  [1/3] Cold Start 측정...                                                                                                                     Cold Start URL: http://jys-new-bucket.s3-website-ap-southeast-2.amazonaws.com/?coldstart=1748598791211&random=d306bcc6-f8a4-467d-9bad-1c14f280ce04
+   총 시간: 184 ms
+   파일 크기: 13065 bytes
+
+[2/3] Cold Start 측정...
+   캐시 초기화 중...
+[FLUSH] 모든 캐시 초기화 중...
+   DNS 캐시 초기화...
+   네트워크 캐시 초기화...
+   캐시 초기화 완료!
+   Cold Start URL: http://jys-new-bucket.s3-website-ap-southeast-2.amazonaws.com/?coldstart=1748598796452&random=932c8f85-fbac-4224-aaf6-08a720a21e2b
+   총 시간: 190 ms
+   파일 크기: 13065 bytes
+
+[3/3] Cold Start 측정...
+   캐시 초기화 중...
+[FLUSH] 모든 캐시 초기화 중...
+   DNS 캐시 초기화...
+   네트워크 캐시 초기화...
+   캐시 초기화 완료!
+   Cold Start URL: http://jys-new-bucket.s3-website-ap-southeast-2.amazonaws.com/?coldstart=1748598801675&random=1e136836-68f5-4071-879a-c81678dbdb9a
+   총 시간: 187 ms
+   파일 크기: 13065 bytes
+
+[S3] 결과:
+   평균: 187 ms
+   최소: 184 ms
+   최대: 190 ms
+
+========================================
+[CloudFront] 진정한 Cold Start 테스트
+----------------------------------------
+기본 URL: https://d18gdmgx2pxnac.cloudfront.net/
+[1/3] Cold Start 측정...
+   Cold Start URL: https://d18gdmgx2pxnac.cloudfront.net/?coldstart=1748598801877&random=775a83d9-c0b6-4ec2-929d-aab51fd7f37f
+   총 시간: 29 ms
+   파일 크기: 13065 bytes
+   캐시 상태: Hit from cloudfront
+   캐시 나이: 12 초
+   Via: 1.1 feea7740fbbb07ab7cb702c5b82d178a.cloudfront.net (CloudFront)
+
+[2/3] Cold Start 측정...
+   캐시 초기화 중...
+[FLUSH] 모든 캐시 초기화 중...
+   DNS 캐시 초기화...
+   네트워크 캐시 초기화...
+   캐시 초기화 완료!
+   Cold Start URL: https://d18gdmgx2pxnac.cloudfront.net/?coldstart=1748598806939&random=4218a81f-503b-4ea0-adc6-00fe94fd5406
+   총 시간: 26 ms
+   파일 크기: 13065 bytes
+   캐시 상태: Hit from cloudfront
+   캐시 나이: 17 초
+   Via: 1.1 feea7740fbbb07ab7cb702c5b82d178a.cloudfront.net (CloudFront)
+
+[3/3] Cold Start 측정...
+   캐시 초기화 중...
+[FLUSH] 모든 캐시 초기화 중...
+   DNS 캐시 초기화...
+   네트워크 캐시 초기화...
+   캐시 초기화 완료!
+   Cold Start URL: https://d18gdmgx2pxnac.cloudfront.net/?coldstart=1748598812001&random=d9dd3daf-84c0-4a5e-a971-03a1f032053b
+   총 시간: 28 ms
+   파일 크기: 13065 bytes
+   캐시 상태: Hit from cloudfront
+   캐시 나이: 23 초
+   Via: 1.1 feea7740fbbb07ab7cb702c5b82d178a.cloudfront.net (CloudFront)
+
+[CloudFront] 결과:
+   평균: 27.67 ms
+   최소: 26 ms
+   최대: 29 ms
+   캐시 Miss: 0 회
+   캐시 Hit: 3 회
+
+[FINAL] 최종 Cold Start 비교 결과
+===========================================
+S3 Cold Start 평균: 187 ms
+CloudFront Cold Start 평균: 27.67 ms
+시간 차이: 159.33 ms
+WINNER: CloudFront가 85.2% 빠름!
+```
+
+#### 성능 측정 결과 요약
+
+| 측정 항목 | S3 Direct | CloudFront CDN | 개선 효과 |
+|-----------|-----------|----------------|-----------|
+| **평균 응답시간** | 187ms | 27.67ms | **85.2% 개선** |
+| **최소 응답시간** | 184ms | 26ms | **85.9% 개선** |
+| **최대 응답시간** | 190ms | 29ms | **84.7% 개선** |
+| **파일 크기** | 13,065 bytes | 13,065 bytes | 동일 |
+| **캐시 적중률** | 0% (캐시 없음) | 100% (Hit) | **완전한 캐시 활용** |
+| **시간 단축** | - | **159.33ms 단축** | **평균 6.8배 빠름** |
+
 ---
+
+#### 배포 플로우: 저장소 → 스토리지 → CDN
+![cdn.svg](README_SRC/cdn.svg)
+
+---
+
+---
+
 ## 테스트
 
 #### 콜드 스타트 성능 측정
