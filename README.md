@@ -1,7 +1,22 @@
-## 링크
+## 주요 링크
 > S3: http://jys-new-bucket.s3-website-ap-southeast-2.amazonaws.com
 > 
 > CloudFront: https://d18gdmgx2pxnac.cloudfront.net
+
+## 주요 개념
+1. GitHub Actions과 CI/CD 도구
+> 코드를 자동으로 빌드하고 배포해주는 도구입니다. main 브랜치에 푸시하면 자동으로 테스트 -> 빌드 -> 배포까지 실행되어 수동 작업 없이 웹사이트를 업데이트할 수 있습니다.
+2. S3와 스토리지
+> 아마존의 클라우드 파일 저장소로 파일들을 인터넷에서 접근 가능하게 해줍니다.
+3. CloudFront와 CDN
+> 전세계에 분산된 서버를 통해 접속자에게 가장 가까운 위치에서 페이지를 제공합니다.
+> 처음 접근하면 X-Cache에서 Miss 가 나오고 이후 Hit로 변경되고 Age가 추가됩니다. 
+5. 캐시 무효화(Cache Invalidation)
+> CDN에 저장된 이전 버전 파일을 삭제해서 새로운 파일이 적용되게 합니다.
+5. Repository secret과 환경변수
+> .env 같이 직접 노출하면 안되는 정보(PW)등을 저장하는 방법으로 배포 시에만 사용됩니다.
+
+---
 
 ## 배포 아키텍처
 ![next](https://github.com/user-attachments/assets/51fb3968-2f9f-4d2b-a0f6-1e3435aadbc2)
